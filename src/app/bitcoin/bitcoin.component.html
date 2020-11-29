@@ -1,0 +1,17 @@
+<h1>Bitcoin</h1>
+<div *ngIf="getCurrentPrice()">
+	<table class="table table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>Data/Hora</th>
+				<th>BRL</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let price of this.bitcoinService.updateList">
+				<td>{{price.timestamp | date:"medium"}}</td>
+				<td>{{price.BRL | currency}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

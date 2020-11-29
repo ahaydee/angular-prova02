@@ -1,0 +1,45 @@
+<h2>Minha Carteira</h2>
+<hr />
+<h3>Bitcoin</h3>
+<p>{{totalBitcoin | currency}}</p>
+<h3>Real</h3>
+<p>{{totalReal | currency}}</p>
+<hr />
+<h4>Comprar</h4>
+<div class="input-group">
+	<input #inputAdd type="number" class="form-control" min="0"/>
+	<div class="input-group-append">
+		<button (click)="this.add(inputAdd.value); inputAdd.value=''" class="btn btn-success">+</button>
+	</div>
+</div>
+<hr />
+<h4>Vender</h4>
+<div class="input-group">
+	<input #inputRemove type="number" class="form-control" min="0"/>
+	<div class="input-group-append">
+		<button (click)="this.remove(inputRemove.value); inputRemove.value=''" class="btn btn-danger">-</button>
+	</div>
+</div>
+<hr />
+<h4>Transações</h4>
+<table class="table table-striped">
+	<thead class="thead-dark">
+		<tr>
+			<th>Valor</th>
+			<th>Cotação Bitcoin</th>
+			<th>Saldo</th>
+			<th>Email</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let item of list | async">
+			<td [className]="item.tipo == '+' ? 'text-success' : 'text-danger'">{{item.valor}}</td>
+			<td>{{item.cotacao}}</td>
+			<td>{{item.saldo}}</td>
+			<td>{{item.user}}</td>
+		</tr>
+		<tr *ngIf="(list | async).length == 0">
+			<td colSpan="4">Nenhuma transação registrada</td>
+		</tr>
+	</tbody>
+</table>

@@ -1,0 +1,67 @@
+<div class="container-fluid" *ngIf="!authService.currentUserEmail">
+	<h2>Login</h2>
+	<form>
+		<label for="email">Email: </label>
+		<input type="text" name="email" id="email" [(ngModel)]="email" class="form-control"/>
+		<label for="password">Senha: </label>
+		<input type="password" name="password" id="password" [(ngModel)]="password" class="form-control"/>
+		<hr />
+		<button class="btn btn-primary" style="margin-right: 15px" (click)="loginWithEmail()">Entrar com email</button>
+		<button class="btn btn-secondary" (click)="loginWithGoogle()">Entrar com Google</button>
+	</form>
+	<div *ngIf="authService.authError" style="color: red">
+		<br/>
+		<p>{{authService.authError}}</p>
+	</div>
+</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="authService.currentUserEmail">
+	<a class="navbar-brand" href="#">{{name}}</a>
+	<button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarText"
+    aria-controls="navbarText"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+	<div class="collapse navbar-collapse" id="navbarText">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link" [routerLink]="['/bitcoin']">Bitcoin</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" [routerLink]="['/minhacarteira']">Minha Carteira</a>
+			</li>
+		</ul>
+		<span class="navbar-text" style="margin-right: 15px">
+		  <span
+        *ngIf="getCurrentPrice() && getUpdateList()"
+        [className]="firstPrice > currentPrice ? 'text-danger' : firstPrice < currentPrice ?
+        'text-success' : ''"
+      >
+        {{firstPrice > currentPrice ? 'Preço ▼ ' : firstPrice < currentPrice ?
+        'Preço ▲ ' : 'Preço ═ '}}
+      </span>
+		</span>
+		<span class="navbar-text" style="margin-right: 15px">
+      <span><strong>{{authService.currentUserEmail}}</strong></span>
+		</span>
+		<form class="form-inline">
+			<button class="btn btn-light" (click)="logout()">Sair</button>
+		</form>
+	</div>
+</nav>
+<div style="padding: 15px" *ngIf="authService.currentUserEmail">
+	<p>Anna Haydée de Lima Siqueira</p>
+	<p>0050831821004</p>
+	<p>
+		<a href="https://github.com/ahaydee/" target="_blank">Github</a>
+	</p>
+	<hr />
+</div>
+<div class="container-fluid" *ngIf="authService.currentUserEmail">
+	<router-outlet></router-outlet>
+</div>
